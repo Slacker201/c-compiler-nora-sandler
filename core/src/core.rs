@@ -1,3 +1,5 @@
+use slk_tokenstream::TokenstreamSpan;
+
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct Span {
     start: usize,
@@ -27,5 +29,14 @@ impl Span {
     #[inline]
     pub fn len(&self) -> usize {
         self.end - self.start
+    }
+}
+
+impl From<TokenstreamSpan> for Span {
+    fn from(value: TokenstreamSpan) -> Self {
+        Self {
+            start: value.start().position(),
+            end: value.end().position(),
+        }
     }
 }

@@ -1,10 +1,11 @@
 [package]
-name = "core"
+name = "slk-c-core"
 version = "0.1.0"
 edition = "2024"
 
 
 [dependencies]
+slk-tokenstream = "0.4.2"
 
 [features]
 lex = []

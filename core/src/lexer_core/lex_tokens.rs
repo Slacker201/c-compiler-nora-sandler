@@ -10,6 +10,12 @@ impl LexToken {
     pub fn new(span: Span, kind: LexTokenKind) -> Self {
         Self { span, kind }
     }
+    pub fn kind(&self) -> &LexTokenKind {
+        &self.kind
+    }
+    pub fn span(&self) -> Span {
+        self.span
+    }
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord, Hash)]

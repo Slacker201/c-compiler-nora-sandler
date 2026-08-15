@@ -7,9 +7,22 @@ name = "compiler_driver"
 version = "0.1.0"
 
 [[package]]
-name = "core"
-version = "0.1.0"
-
-[[package]]
 name = "lexer"
 version = "0.1.0"
+dependencies = [
+ "slk-c-core",
+ "slk-tokenstream",
+]
+
+[[package]]
+name = "slk-c-core"
+version = "0.1.0"
+dependencies = [
+ "slk-tokenstream",
+]
+
+[[package]]
+name = "slk-tokenstream"
+version = "0.4.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "c6c7118075248ca36a124e0f0972d9e5adf60cf9dbde87afea843e93b2f8c0ac"

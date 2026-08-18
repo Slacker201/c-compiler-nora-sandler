@@ -3,3 +3,6 @@ pub mod lexer_core;
 
 #[cfg(feature = "core")]
 pub mod core;
+
+#[cfg(feature = "parse")]
+pub mod parser_core;

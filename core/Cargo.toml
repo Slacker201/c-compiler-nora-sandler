@@ -8,5 +8,6 @@ edition = "2024"
 slk-tokenstream = "0.4.2"
 
 [features]
-lex = []
+lex = ["core"]
+parse = ["lex", "core"]
 core = []

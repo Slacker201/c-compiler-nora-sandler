@@ -7,4 +7,4 @@ edition = "2024"
 
 
 [workspace]
-members = ["core", "lexer"]
+members = ["core", "lexer", "parser"]

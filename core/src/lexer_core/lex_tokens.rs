@@ -24,6 +24,7 @@ pub enum LexTokenKind {
     Symbol(Symbol),
     Constant(Constant),
     Identifier(Identifier),
+    EOF,
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]

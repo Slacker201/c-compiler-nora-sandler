@@ -17,6 +17,10 @@ dependencies = [
 [[package]]
 name = "parser"
 version = "0.1.0"
+dependencies = [
+ "slk-c-core",
+ "slk-tokenstream",
+]
 
 [[package]]
 name = "slk-c-core"
@@ -27,6 +31,6 @@ dependencies = [
 
 [[package]]
 name = "slk-tokenstream"
-version = "0.4.2"
+version = "0.4.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "c6c7118075248ca36a124e0f0972d9e5adf60cf9dbde87afea843e93b2f8c0ac"
+checksum = "aedf14a9af7eaeefcdf4b66bf6a620acefd9d4bbae9da02f902ec4afccf94eab"

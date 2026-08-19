@@ -14,6 +14,9 @@ use slk_tokenstream::TokenStream;
 
 use crate::Parse;
 
+const VALID_EXPRESSION_TOKENS: &[&str] = &["-", "~", "(", "Constant"];
+
+
 impl Parse for Expression {
     fn parse(ts: &mut TokenStream<'_, LexToken>) -> Result<Self, ParserError>
     where
@@ -32,8 +35,10 @@ impl Parse for Expression {
             .consume_if(|t| *t.kind() == LexTokenKind::Symbol(Symbol::OpenParen))
             .is_some()
         {
-            let mut expr = Expression::parse(ts).inspect_err(|_| {
+            let mut expr = Expression::parse(ts).map_err(|mut e| {
+                e.replace_desired(VALID_EXPRESSION_TOKENS);
                 ts.reset(&start);
+                e
             })?;
 
             match ts.consume_if_else_err(|t| *t.kind() == LexTokenKind::Symbol(Symbol::CloseParen))
@@ -66,10 +71,15 @@ impl Parse for Expression {
             }
         }
 
-        let op = UnaryOp::parse(ts)?;
+        let op = UnaryOp::parse(ts).map_err(|mut e| {
+            e.replace_desired(VALID_EXPRESSION_TOKENS);
+            e
+        })?;
 
-        let expr = Expression::parse(ts).inspect_err(|_| {
+        let expr = Expression::parse(ts).map_err(|mut e| {
+            e.replace_desired(VALID_EXPRESSION_TOKENS);
             ts.reset(&start);
+            e
         })?;
 
         let kind = ExpressionKind::Unary(op, Box::new(expr));

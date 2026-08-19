@@ -60,4 +60,8 @@ impl Identifier {
     pub fn new(ident: String) -> Self {
         Self { ident }
     }
+
+    pub fn ident(&self) -> &str {
+        &self.ident
+    }
 }

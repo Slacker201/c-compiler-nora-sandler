@@ -1,4 +1,4 @@
-use slk_tokenstream::TokenstreamSpan;
+use slk_tokenstream::{Mark, TokenstreamSpan};
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct Span {
@@ -29,6 +29,14 @@ impl Span {
     #[inline]
     pub fn len(&self) -> usize {
         self.end - self.start
+    }
+    #[inline]
+    pub fn from_tokenstream_mark(mut start: Mark, mut end: Mark) -> Self {
+        if start.position() > end.position() {
+            core::mem::swap(&mut start, &mut end);
+        }
+
+        Self::new(start.position(), end.position())
     }
 }
 

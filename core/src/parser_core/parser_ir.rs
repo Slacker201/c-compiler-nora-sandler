@@ -104,3 +104,37 @@ impl Constant {
         }
     }
 }
+
+impl Expression {
+    pub fn new(kind: ExpressionKind, span: Span) -> Self {
+        Self { kind, span }
+    }
+
+    pub fn span(&self) -> Span {
+        self.span
+    }
+
+    pub fn set_span(&mut self, span: Span) {
+        self.span = span;
+    }
+}
+
+impl UnaryOp {
+    pub fn from_symbol(s: lex_tokens::Symbol) -> Self {
+        match s {
+            lex_tokens::Symbol::Minus => Self::Negate,
+            lex_tokens::Symbol::Tilda => Self::BitInvert,
+            _ => panic!()
+        }
+    }
+
+    pub fn try_from_symbol(s: lex_tokens::Symbol) -> Result<Self, ()> {
+        let s = match s {
+            lex_tokens::Symbol::Minus => Self::Negate,
+            lex_tokens::Symbol::Tilda => Self::BitInvert,
+            _ => return Err(())
+        };
+
+        Ok(s)
+    }
+}

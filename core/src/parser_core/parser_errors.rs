@@ -1,4 +1,4 @@
-use slk_tokenstream::TokenStream;
+use slk_tokenstream::{Mark, TokenStream};
 
 use crate::{core::Span, lexer_core::lex_tokens::{LexToken, LexTokenKind}};
 
@@ -37,6 +37,16 @@ impl ParserErrorKind {
 
     pub fn expected_got_eof(expected: &'static [&'static str]) -> Self {
         Self::ExpectedFound { expected, got: LexTokenKind::EOF }
+    }
+
+    pub fn expected_got_from_opt(expected: &'static [&'static str], got: &Option<&LexToken>, start: Mark, end: Mark) -> (Self, Span) {
+        let got = if let Some(s) = got {
+            s.kind().clone()
+        } else {
+            LexTokenKind::EOF
+        };
+
+        (Self::ExpectedFound { expected, got }, Span::from_tokenstream_mark(start, end))
     }
 }
 

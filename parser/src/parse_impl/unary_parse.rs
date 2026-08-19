@@ -28,9 +28,9 @@ impl Parse for UnaryOp {
                 }
             }
             Err(e) => {
-                if let Some(t) = e {
+                if e.is_some() {
                     return Err(ParserError::new(
-                        t.span(),
+                        Span::from_tokenstream_mark(start, ts.mark()),
                         ParserErrorKind::expected_got(&["-", "~"], ts),
                     ));
                 } else {

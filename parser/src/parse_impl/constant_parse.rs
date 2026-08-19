@@ -20,15 +20,18 @@ impl Parse for Constant {
         match ts.consume_if_else_err(|token| matches!(token.kind(), LexTokenKind::Constant(_))) {
             Ok(tok) => {
                 if let LexTokenKind::Constant(c) = tok.kind() {
-                    return Ok(Constant::from_lex_constant(c.clone(), tok.span()));
+                    return Ok(Constant::from_lex_constant(
+                        c.clone(),
+                        Span::from_tokenstream_mark(start, ts.mark()),
+                    ));
                 } else {
                     unreachable!()
                 }
             }
             Err(e) => {
-                if let Some(c) = e {
+                if e.is_some() {
                     return Err(ParserError::new(
-                        c.span(),
+                        Span::from_tokenstream_mark(start, ts.mark()),
                         ParserErrorKind::expected_got(&["Constant"], ts),
                     ));
                 } else {

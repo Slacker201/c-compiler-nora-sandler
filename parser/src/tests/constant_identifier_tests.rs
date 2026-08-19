@@ -53,7 +53,7 @@ fn constant_reject_invalid() {
     assert_eq!(
         Constant::parse(&mut ts),
         Err(ParserError::new(
-            Span::new(0, 16),
+            Span::new(0, 0),
             ParserErrorKind::ExpectedFound {
                 expected: &["Constant"],
                 got: LexTokenKind::Identifier(lex_tokens::Identifier::new(
@@ -73,7 +73,7 @@ fn identifier_accept_valid() {
 
     assert_eq!(
         Identifier::parse(&mut ts),
-        Ok(Identifier::new("ident".to_string(), Span::new(0, 5)))
+        Ok(Identifier::new("ident".to_string(), Span::new(0, 1)))
     )
 }
 
@@ -86,7 +86,7 @@ fn identifier_accept_valid_trailing_tokens() {
 
     assert_eq!(
         Identifier::parse(&mut ts),
-        Ok(Identifier::new("ident".to_string(), Span::new(0, 5)))
+        Ok(Identifier::new("ident".to_string(), Span::new(0, 1)))
     )
 }
 
@@ -100,7 +100,7 @@ fn identifier_reject_invalid_token() {
     assert_eq!(
         Identifier::parse(&mut ts),
         Err(ParserError::new(
-            Span::new(0, 1),
+            Span::new(0, 0),
             ParserErrorKind::ExpectedFound {
                 expected: &["Identifier"],
                 got: LexTokenKind::Constant(lex_tokens::Constant::I32(0))

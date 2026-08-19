@@ -1,5 +1,7 @@
 use slk_c_core::{
-    lexer_core::lex_tokens::LexToken,
+    core::Span,
+    get_or_ret,
+    lexer_core::lex_tokens::{KeyWord, LexToken, LexTokenKind, Symbol},
     parser_core::{
         parser_errors::ParserError,
         parser_ir::{Function, Identifier, Statement},
@@ -16,13 +18,29 @@ impl Parse for Function {
     {
         let start = ts.mark();
 
-        let ident = Identifier::parse(ts)?;
+        get_or_ret!(ts, start, LexTokenKind::KeyWord(KeyWord::Int), &["int"]);
+
+        let ident = Identifier::parse(ts).inspect_err(|_| {
+            ts.reset(&start);
+        })?;
+
+        get_or_ret!(ts, start, LexTokenKind::Symbol(Symbol::OpenParen), &["("]);
+        get_or_ret!(ts, start, LexTokenKind::KeyWord(KeyWord::Void), &["void"]);
+        get_or_ret!(ts, start, LexTokenKind::Symbol(Symbol::CloseParen), &[")"]);
+        get_or_ret!(ts, start, LexTokenKind::Symbol(Symbol::OpenBracket), &["{"]);
 
         let statement = Statement::parse(ts).inspect_err(|_| {
             ts.reset(&start);
         })?;
 
-        let span = ident.span().combine(statement.span());
+        get_or_ret!(
+            ts,
+            start,
+            LexTokenKind::Symbol(Symbol::CloseBracket),
+            &["}"]
+        );
+
+        let span = Span::from_tokenstream_mark(start, ts.mark());
 
         Ok(Self::new(ident, statement, span))
     }

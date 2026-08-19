@@ -1,4 +1,5 @@
 use slk_c_core::{
+    core::Span,
     lexer_core::lex_tokens::LexToken,
     parser_core::{
         parser_errors::ParserError,
@@ -14,8 +15,9 @@ impl Parse for Program {
     where
         Self: Sized,
     {
+        let start = ts.mark();
         let func = Function::parse(ts)?;
-        let span = func.span();
+        let span = Span::from_tokenstream_mark(start, ts.mark());
 
         Ok(Self::new(func, span))
     }

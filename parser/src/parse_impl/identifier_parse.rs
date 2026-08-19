@@ -20,15 +20,18 @@ impl Parse for Identifier {
         match ts.consume_if_else_err(|token| matches!(token.kind(), LexTokenKind::Identifier(_))) {
             Ok(tok) => {
                 if let LexTokenKind::Identifier(c) = tok.kind() {
-                    return Ok(Identifier::new(c.ident().to_string(), tok.span()));
+                    return Ok(Identifier::new(
+                        c.ident().to_string(),
+                        Span::from_tokenstream_mark(start, ts.mark()),
+                    ));
                 } else {
                     unreachable!()
                 }
             }
             Err(e) => {
-                if let Some(c) = e {
+                if e.is_some() {
                     return Err(ParserError::new(
-                        c.span(),
+                        Span::from_tokenstream_mark(start, ts.mark()),
                         ParserErrorKind::expected_got(&["Identifier"], ts),
                     ));
                 } else {

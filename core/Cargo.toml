@@ -9,5 +9,6 @@ slk-tokenstream = "0.4.2"
 
 [features]
 lex = ["core"]
-parse = ["lex", "core"]
+parse = ["lex", "core", "macro_rules"]
+macro_rules = []
 core = []

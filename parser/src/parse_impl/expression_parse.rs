@@ -1,11 +1,16 @@
 use slk_c_core::{
-    core::Span, lexer_core::lex_tokens::{LexToken, LexTokenKind, Symbol}, parser_core::{
-        parser_errors::{ParserError, ParserErrorKind}, parser_ir::{
-            Constant, Expression, ExpressionKind::{self}, UnaryOp,
+    core::Span,
+    lexer_core::lex_tokens::{LexToken, LexTokenKind, Symbol},
+    parser_core::{
+        parser_errors::{ParserError, ParserErrorKind},
+        parser_ir::{
+            Constant, Expression,
+            ExpressionKind::{self},
+            UnaryOp,
         },
     },
 };
-use slk_tokenstream::{TokenStream};
+use slk_tokenstream::TokenStream;
 
 use crate::Parse;
 
@@ -23,44 +28,49 @@ impl Parse for Expression {
             ));
         }
 
-        if ts.consume_if(|t| *t.kind() == LexTokenKind::Symbol(Symbol::OpenParen)).is_some() {
-            let mut expr = Expression::parse(ts).inspect_err(|_| { ts.reset(&start); })?;
-            
+        if ts
+            .consume_if(|t| *t.kind() == LexTokenKind::Symbol(Symbol::OpenParen))
+            .is_some()
+        {
+            let mut expr = Expression::parse(ts).inspect_err(|_| {
+                ts.reset(&start);
+            })?;
 
-            match ts.consume_if_else_err(|t| *t.kind() == LexTokenKind::Symbol(Symbol::CloseParen)) {
+            match ts.consume_if_else_err(|t| *t.kind() == LexTokenKind::Symbol(Symbol::CloseParen))
+            {
                 Ok(_) => {
                     let new_span = Span::from_tokenstream_mark(start, ts.mark());
 
                     expr.set_span(new_span);
 
-                    return Ok(expr)
-                },
+                    return Ok(expr);
+                }
                 Err(t) => {
                     if let Some(t) = t {
-                        let e = Err(
-                            ParserError::new(t.span(), 
-                            ParserErrorKind::expected_got(&[")"], ts)
-                        )
-                        );
+                        let e = Err(ParserError::new(
+                            t.span(),
+                            ParserErrorKind::expected_got(&[")"], ts),
+                        ));
 
                         ts.reset(&start);
-                        return e
+                        return e;
                     } else {
-                        let e = Err(
-                            ParserError::new(Span::from_tokenstream_mark(ts.mark(), ts.mark()), 
-                            ParserErrorKind::expected_got(&[")"], ts)
-                        )
-                        );
+                        let e = Err(ParserError::new(
+                            Span::from_tokenstream_mark(ts.mark(), ts.mark()),
+                            ParserErrorKind::expected_got(&[")"], ts),
+                        ));
                         ts.reset(&start);
-                        return e
+                        return e;
                     }
-                },
+                }
             }
         }
 
         let op = UnaryOp::parse(ts)?;
 
-        let expr = Expression::parse(ts).inspect_err(|_| { ts.reset(&start); })?;
+        let expr = Expression::parse(ts).inspect_err(|_| {
+            ts.reset(&start);
+        })?;
 
         let kind = ExpressionKind::Unary(op, Box::new(expr));
 

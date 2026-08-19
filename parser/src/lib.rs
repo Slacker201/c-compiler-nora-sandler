@@ -3,6 +3,9 @@ use slk_tokenstream::TokenStream;
 
 pub mod parse_impl;
 
+#[cfg(test)]
+mod tests;
+
 pub trait Parse {
     fn parse(ts: &mut TokenStream<'_, LexToken>) -> Result<Self, ParserError>
     where

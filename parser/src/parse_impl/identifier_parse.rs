@@ -1,10 +1,12 @@
 use slk_c_core::{
-    core::Span, lexer_core::lex_tokens::{LexToken, LexTokenKind}, parser_core::{
+    core::Span,
+    lexer_core::lex_tokens::{LexToken, LexTokenKind},
+    parser_core::{
         parser_errors::{ParserError, ParserErrorKind},
         parser_ir::Identifier,
     },
 };
-use slk_tokenstream::{TokenStream};
+use slk_tokenstream::TokenStream;
 
 use crate::Parse;
 

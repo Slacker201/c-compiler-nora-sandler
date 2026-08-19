@@ -1,7 +1,7 @@
 use lexer::Lexer;
 use slk_c_core::{
     core::Span,
-    lexer_core::lex_tokens::{self, LexTokenKind, Symbol},
+    lexer_core::lex_tokens::{self, LexTokenKind},
     parser_core::{
         parser_errors::{ParserError, ParserErrorKind},
         parser_ir::{Constant, Identifier},

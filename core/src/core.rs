@@ -38,6 +38,13 @@ impl Span {
 
         Self::new(start.position(), end.position())
     }
+
+    pub fn combine(&self, other: Self) -> Self {
+        let start = self.start.min(other.start);
+        let end = self.end.max(other.end);
+
+        Self::new(start, end)
+    }
 }
 
 impl From<TokenstreamSpan> for Span {

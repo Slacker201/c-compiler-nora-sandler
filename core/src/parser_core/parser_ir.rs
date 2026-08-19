@@ -75,6 +75,10 @@ impl Function {
     pub fn statement(&self) -> &Statement {
         &self.statement
     }
+
+        pub fn span(&self) -> Span {
+        self.span
+    }
 }
 
 impl Identifier {
@@ -85,6 +89,10 @@ impl Identifier {
     pub fn value(&self) -> &str {
         &self.ident
     }
+
+    pub fn span(&self) -> Span {
+        self.span
+    }
 }
 
 impl Statement {
@@ -94,6 +102,10 @@ impl Statement {
 
     pub fn expression(&self) -> &Expression {
         &self.expression
+    }
+
+    pub fn span(&self) -> Span {
+        self.span
     }
 }
 

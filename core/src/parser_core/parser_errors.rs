@@ -39,3 +39,13 @@ impl ParserErrorKind {
         Self::ExpectedFound { expected, got: LexTokenKind::EOF }
     }
 }
+
+impl ParserError {
+    pub fn replace_desired(&mut self, new_expected: &'static [&'static str]) {
+        match &mut self.kind {
+            ParserErrorKind::ExpectedFound { expected, got: _ } => {
+                *expected = new_expected
+            },
+        }
+    }
+}

@@ -8,7 +8,7 @@ pub mod core;
 pub mod parser_core;
 
 #[cfg(feature = "parse_macro")]
-mod parse_macro;
+pub mod parse_macro;
 
 #[cfg(feature = "tacky_gen")]
-mod tacky_gen;
+pub mod tacky_gen;

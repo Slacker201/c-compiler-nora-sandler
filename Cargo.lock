@@ -35,3 +35,13 @@ name = "slk-tokenstream"
 version = "0.4.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "aedf14a9af7eaeefcdf4b66bf6a620acefd9d4bbae9da02f902ec4afccf94eab"
+
+[[package]]
+name = "tacky_gen"
+version = "0.1.0"
+dependencies = [
+ "lexer",
+ "parser",
+ "slk-c-core",
+ "slk-tokenstream",
+]

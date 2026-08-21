@@ -1,10 +1,14 @@
 use std::sync::atomic::{AtomicU64, Ordering};
 
+use crate::parser_core::parser_ir::Constant;
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub enum TackyInstruction {
     Ret,
     LoadVariable(VariableId, Value),
+    CopyValue(VariableId, VariableId),
+    BitwiseNegate(VariableId, VariableId),
+    Negate(VariableId, VariableId),
 }
 
 static VARIABLE_COUNTER: AtomicU64 = AtomicU64::new(0);
@@ -12,9 +16,7 @@ static VARIABLE_COUNTER: AtomicU64 = AtomicU64::new(0);
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub enum VariableId {
     EAX,
-    Variable {
-        id: u64,
-    }
+    Variable { id: u64 },
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
@@ -24,6 +26,16 @@ pub enum Value {
 
 impl VariableId {
     pub fn new_id() -> Self {
-        Self::Variable { id: VARIABLE_COUNTER.fetch_add(1, Ordering::Relaxed) }
+        Self::Variable {
+            id: VARIABLE_COUNTER.fetch_add(1, Ordering::Relaxed),
+        }
+    }
+}
+
+impl Value {
+    pub fn from_ast_constant(constant: &Constant) -> Self {
+        match constant {
+            Constant::I32 { value, span: _ } => Self::I32(*value),
+        }
     }
 }

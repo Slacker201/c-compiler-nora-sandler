@@ -1,7 +1,11 @@
 use lexer::Lexer;
 use slk_c_core::{
-    core::Span, lexer_core::lex_tokens::{LexTokenKind, Symbol}, parser_core::{
-        parser_errors::{ParserError, ParserErrorKind}, parser_ir::{Constant, Expression, ExpressionKind, Function, Identifier, Program, Statement},
+    core::Span,
+    parser_core::{
+        parser_errors::ParserError,
+        parser_ir::{
+            Constant, Expression, ExpressionKind, Function, Identifier, Program, Statement,
+        },
     },
 };
 use slk_tokenstream::TokenStream;
@@ -15,22 +19,23 @@ fn function_accept_valid() {
 
     let mut ts = TokenStream::new(&valid_tokens);
 
-    let desired: Result<Program, ParserError> = Ok(
-        Program::new(Function::new(
-        Identifier::new("main".to_string(), Span::new(1, 2)),
-        Statement::new(
-            Expression::new(
-                ExpressionKind::Constant(Constant::I32 {
-                    value: 0,
-                    span: Span::new(7, 8),
-                }),
-                Span::new(7, 8),
+    let desired: Result<Program, ParserError> = Ok(Program::new(
+        Function::new(
+            Identifier::new("main".to_string(), Span::new(1, 2)),
+            Statement::new(
+                Expression::new(
+                    ExpressionKind::Constant(Constant::I32 {
+                        value: 0,
+                        span: Span::new(7, 8),
+                    }),
+                    Span::new(7, 8),
+                ),
+                Span::new(6, 9),
             ),
-            Span::new(6, 9),
+            Span::new(0, 10),
         ),
         Span::new(0, 10),
-    ), Span::new(0, 10))
-    );
+    ));
 
     let got = Program::parse(&mut ts);
 

@@ -1,6 +1,5 @@
 use crate::{core::Span, lexer_core::lex_tokens};
 
-
 #[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct Program {
     function: Function,
@@ -34,10 +33,7 @@ pub enum ExpressionKind {
 
 #[derive(Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub enum Constant {
-    I32 {
-        value: i32,
-        span: Span,
-    },
+    I32 { value: i32, span: Span },
 }
 
 #[derive(Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord, Hash)]
@@ -52,7 +48,6 @@ pub struct Identifier {
     span: Span,
 }
 
-
 impl Program {
     pub fn new(function: Function, span: Span) -> Self {
         Self { function, span }
@@ -65,7 +60,11 @@ impl Program {
 
 impl Function {
     pub fn new(identifier: Identifier, statement: Statement, span: Span) -> Self {
-        Self { identifier, statement, span }
+        Self {
+            identifier,
+            statement,
+            span,
+        }
     }
 
     pub fn identifier(&self) -> &Identifier {
@@ -76,13 +75,13 @@ impl Function {
         &self.statement
     }
 
-        pub fn span(&self) -> Span {
+    pub fn span(&self) -> Span {
         self.span
     }
 }
 
 impl Identifier {
-    pub fn new(ident: String, span: Span,) -> Self {
+    pub fn new(ident: String, span: Span) -> Self {
         Self { ident, span }
     }
 
@@ -122,6 +121,10 @@ impl Expression {
         Self { kind, span }
     }
 
+    pub fn kind(&self) -> &ExpressionKind {
+        &self.kind
+    }
+
     pub fn span(&self) -> Span {
         self.span
     }
@@ -136,7 +139,7 @@ impl UnaryOp {
         match s {
             lex_tokens::Symbol::Minus => Self::Negate,
             lex_tokens::Symbol::Tilda => Self::BitInvert,
-            _ => panic!()
+            _ => panic!(),
         }
     }
 
@@ -144,7 +147,7 @@ impl UnaryOp {
         let s = match s {
             lex_tokens::Symbol::Minus => Self::Negate,
             lex_tokens::Symbol::Tilda => Self::BitInvert,
-            _ => return Err(())
+            _ => return Err(()),
         };
 
         Ok(s)

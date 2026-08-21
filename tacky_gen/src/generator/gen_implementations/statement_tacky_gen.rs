@@ -1,9 +1,9 @@
-use slk_c_core::{core::Span, parser_core::parser_ir::{Constant, Expression, ExpressionKind, Statement}, tacky_gen::{TackyInstruction, VariableId}};
-use slk_tokenstream::TokenStream;
+use slk_c_core::{
+    parser_core::parser_ir::Statement,
+    tacky_gen::{TackyInstruction, VariableId},
+};
 
 use crate::generator::TackyGen;
-
-
 
 impl TackyGen<Vec<TackyInstruction>> for Statement {
     fn generate_tacky(&self) -> Vec<TackyInstruction> {

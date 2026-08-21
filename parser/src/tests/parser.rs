@@ -8,16 +8,15 @@ use slk_c_core::{
         },
     },
 };
-use slk_tokenstream::TokenStream;
 
-use crate::Parse;
+use crate::Parser;
 
 #[test]
-fn function_accept_valid() {
+fn test_parser() {
     let prog: Vec<_> = "int main(void) { return 0; }".chars().collect();
     let valid_tokens = Lexer::new(&prog).lex_until_error().unwrap();
 
-    let mut ts = TokenStream::new(&valid_tokens);
+    let parser = Parser::new(&valid_tokens);
 
     let desired: Result<Program, ParserError> = Ok(Program::new(
         Function::new(
@@ -37,7 +36,7 @@ fn function_accept_valid() {
         Span::new(0, 10),
     ));
 
-    let got = Program::parse(&mut ts);
+    let got = parser.parse();
 
     assert_eq!(got, desired)
 }

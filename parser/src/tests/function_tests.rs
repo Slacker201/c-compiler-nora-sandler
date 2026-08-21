@@ -1,7 +1,10 @@
 use lexer::Lexer;
 use slk_c_core::{
-    core::Span, lexer_core::lex_tokens::{LexTokenKind, Symbol}, parser_core::{
-        parser_errors::{ParserError, ParserErrorKind}, parser_ir::{Constant, Expression, ExpressionKind, Function, Identifier, Statement},
+    core::Span,
+    lexer_core::lex_tokens::{LexTokenKind, Symbol},
+    parser_core::{
+        parser_errors::{ParserError, ParserErrorKind},
+        parser_ir::{Constant, Expression, ExpressionKind, Function, Identifier, Statement},
     },
 };
 use slk_tokenstream::TokenStream;
@@ -42,11 +45,13 @@ fn expression_reject_malformed() {
 
     let mut ts = TokenStream::new(&valid_tokens);
 
-    let desired: Result<Function, ParserError> = Err(
-        ParserError::new(Span::new(3, 3), 
-        ParserErrorKind::ExpectedFound { expected: &["void"], got: LexTokenKind::Symbol(Symbol::CloseParen) }
-    )
-    );
+    let desired: Result<Function, ParserError> = Err(ParserError::new(
+        Span::new(3, 3),
+        ParserErrorKind::ExpectedFound {
+            expected: &["void"],
+            got: LexTokenKind::Symbol(Symbol::CloseParen),
+        },
+    ));
 
     let got = Function::parse(&mut ts);
 

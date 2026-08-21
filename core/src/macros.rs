@@ -1,4 +1,3 @@
-
 #[macro_export]
 macro_rules! get_or_ret {
     ($ts: ident, $start: ident, $mat: pat, $error: expr) => {
@@ -10,7 +9,7 @@ macro_rules! get_or_ret {
                     t
                 }
                 Err(e) => {
-                    
+
                     let (kind, mut span) = ::slk_c_core::parser_core::parser_errors::ParserErrorKind::expected_got_from_opt($error, &e, cur_pos, cur_pos);
                     $ts.reset(&$start);
 
@@ -20,7 +19,6 @@ macro_rules! get_or_ret {
         }
     };
 }
-
 
 #[macro_export]
 macro_rules! replace_desired {

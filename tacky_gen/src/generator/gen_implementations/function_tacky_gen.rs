@@ -9,7 +9,8 @@ impl TackyGen<(Label, Vec<TackyInstruction>)> for Function {
 
         let label = Label::new_id();
 
-        let instr = self.statement().generate_tacky();
+        let mut instr = vec![TackyInstruction::Label(label)];
+        instr.extend(self.statement().generate_tacky());
 
         (label, instr)
     }

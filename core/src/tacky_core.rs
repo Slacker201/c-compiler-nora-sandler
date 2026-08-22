@@ -43,6 +43,9 @@ impl Label {
     pub fn new_id() -> Self {
         Self { id: FUNCTION_COUNTER.fetch_add(1, Ordering::Relaxed) }
     }
+    pub fn new(id: u64) -> Self {
+        Self { id }
+    }
 }
 
 

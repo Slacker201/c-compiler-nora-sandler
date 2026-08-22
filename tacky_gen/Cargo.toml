@@ -1,0 +1,15 @@
+[package]
+name = "tacky_gen"
+version = "0.1.0"
+edition = "2024"
+
+
+[dependencies]
+slk-tokenstream = "0.4.4"
+slk-c-core = { path = "/home/Slacker201/Documents/rust-projects/compiler/compiler_driver/core" }
+
+
+[dev-dependencies]
+parser = { path = "/home/Slacker201/Documents/rust-projects/compiler/compiler_driver/parser" }
+lexer = { path = "/home/Slacker201/Documents/rust-projects/compiler/compiler_driver/lexer" }
+slk-c-core = { path = "/home/Slacker201/Documents/rust-projects/compiler/compiler_driver/core", features = ["tacky_core"]}

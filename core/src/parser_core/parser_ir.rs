@@ -121,6 +121,10 @@ impl Expression {
         Self { kind, span }
     }
 
+    pub fn kind(&self) -> &ExpressionKind {
+        &self.kind
+    }
+
     pub fn span(&self) -> Span {
         self.span
     }

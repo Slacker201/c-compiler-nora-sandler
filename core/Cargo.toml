@@ -10,6 +10,6 @@ slk-tokenstream = "0.4.2"
 [features]
 lex = ["core"]
 parse = ["lex", "core", "parse_macro"]
-tacky_gen = ["parse", "core"]
+tacky_core = ["parse", "core"]
 parse_macro = []
 core = []

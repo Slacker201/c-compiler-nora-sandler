@@ -1,6 +1,6 @@
 use slk_c_core::{
     parser_core::parser_ir::Statement,
-    tacky_gen::{TackyInstruction, VariableId},
+    tacky_core::{TackyInstruction, VariableId},
 };
 
 use crate::generator::TackyGen;

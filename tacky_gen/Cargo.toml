@@ -12,4 +12,4 @@ slk-c-core = { path = "/home/Slacker201/Documents/rust-projects/compiler/compile
 [dev-dependencies]
 parser = { path = "/home/Slacker201/Documents/rust-projects/compiler/compiler_driver/parser" }
 lexer = { path = "/home/Slacker201/Documents/rust-projects/compiler/compiler_driver/lexer" }
-slk-c-core = { path = "/home/Slacker201/Documents/rust-projects/compiler/compiler_driver/core", features = ["tacky_gen"]}
+slk-c-core = { path = "/home/Slacker201/Documents/rust-projects/compiler/compiler_driver/core", features = ["tacky_core"]}
